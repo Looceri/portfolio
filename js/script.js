@@ -146,6 +146,7 @@ function initCustomCursor() {
     if (!cursor || !follower) return;
 
     let mouseX = 0, mouseY = 0, followerX = 0, followerY = 0;
+    const speed = 0.2; // Increase speed for less "lag"
 
     document.addEventListener('mousemove', e => {
         mouseX = e.clientX;
@@ -153,17 +154,27 @@ function initCustomCursor() {
     });
 
     const animate = () => {
+        // Move the inner dot instantly
         cursor.style.transform = `translate(${mouseX - 10}px, ${mouseY - 10}px)`;
-        followerX += (mouseX - followerX - 20) * 0.1;
-        followerY += (mouseY - followerY - 20) * 0.1;
-        follower.style.transform = `translate(${followerX}px, ${followerY}px)`;
+
+        // Make the follower chase the mouse for a smooth effect
+        followerX += (mouseX - followerX) * speed;
+        followerY += (mouseY - followerY) * speed;
+        follower.style.transform = `translate(${followerX - 20}px, ${followerY - 20}px)`;
+        
         requestAnimationFrame(animate);
     };
     animate();
 
     document.querySelectorAll('a, button, [data-aos]').forEach(el => {
-        el.addEventListener('mouseenter', () => follower.style.transform = `translate(${followerX}px, ${followerY}px) scale(2.5)`);
-        el.addEventListener('mouseleave', () => follower.style.transform = `translate(${followerX}px, ${followerY}px) scale(1)`);
+        el.addEventListener('mouseenter', () => {
+            follower.classList.add('hover');
+            cursor.classList.add('hover');
+        });
+        el.addEventListener('mouseleave', () => {
+            follower.classList.remove('hover');
+            cursor.classList.remove('hover');
+        });
     });
 }
 
@@ -235,6 +246,8 @@ function initProjectFilter() {
     const projectCards = document.querySelectorAll('.projects-grid .project-card');
     if (!filterButtons.length) return;
 
+    const transitionDuration = 300; // Must match --transition-medium in CSS (0.3s)
+
     filterButtons.forEach(button => {
         button.addEventListener('click', () => {
             filterButtons.forEach(btn => btn.classList.remove('active'));
@@ -244,7 +257,19 @@ function initProjectFilter() {
             projectCards.forEach(card => {
                 const cardCategory = card.dataset.category;
                 const matches = (filter === 'all' || cardCategory === filter);
-                card.classList.toggle('hide', !matches);
+
+                if (!matches) {
+                    card.classList.add('hide');
+                    setTimeout(() => {
+                        card.style.display = 'none';
+                    }, transitionDuration);
+                } else {
+                    card.style.display = ''; // Reset display property
+                    // Delay removing 'hide' to allow fade-in animation
+                    setTimeout(() => {
+                        card.classList.remove('hide');
+                    }, 10);
+                }
             });
         });
     });
