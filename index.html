@@ -1,54 +1,343 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR" data-theme="dark">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>My Portfolio</title>
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>João Silva - Desenvolvedor Full Stack</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
 </head>
 <body>
-
-  <header>
-    <h1>John Doe</h1>
-    <p>Web Developer | Designer | Freelancer</p>
-    <nav>
-      <a href="#about">About</a>
-      <a href="#projects">Projects</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </header>
-
-  <section id="about">
-    <h2>About Me</h2>
-    <p>Hello! I'm John Doe, a passionate web developer specialized in building modern and responsive websites.</p>
-  </section>
-
-  <section id="projects">
-    <h2>My Projects</h2>
-    <div class="projects">
-      <div class="project">
-        <h3>Project 1</h3>
-        <p>Short description of the project.</p>
-        <a href="#">View Project</a>
-      </div>
-      <div class="project">
-        <h3>Project 2</h3>
-        <p>Short description of the project.</p>
-        <a href="#">View Project</a>
-      </div>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loading">
+        <div class="loader">
+            <div class="loader-inner">
+                <div class="loader-block"></div>
+                <div class="loader-block"></div>
+                <div class="loader-block"></div>
+                <div class="loader-block"></div>
+            </div>
+            <p class="loading-text">Carregando...</p>
+        </div>
     </div>
-  </section>
 
-  <section id="contact">
-    <h2>Contact</h2>
-    <p>Email: john.doe@example.com</p>
-    <p>LinkedIn: <a href="https://linkedin.com/in/johndoe" target="_blank">John Doe</a></p>
-  </section>
+    <!-- Cursor personalizado -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
 
-  <footer>
-    <p>© 2025 John Doe</p>
-  </footer>
+    <!-- Partículas de fundo -->
+    <div class="particles" id="particles"></div>
 
-  <script src="js/script.js"></script>
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="nav-logo" aria-label="Home">
+             
+            </a>
+            <ul class="nav-menu" id="nav-menu">
+                <li class="nav-item"><a href="#home" class="nav-link">Início</a></li>
+                <li class="nav-item"><a href="#about" class="nav-link">Sobre</a></li>
+                <li class="nav-item"><a href="#skills" class="nav-link">Habilidades</a></li>
+                <li class="nav-item"><a href="#projects" class="nav-link">Projetos</a></li>
+                <li class="nav-item"><a href="#experience" class="nav-link">Experiência</a></li>
+                <li class="nav-item"><a href="#blog" class="nav-link">Blog</a></li>
+                <li class="nav-item"><a href="#contact" class="nav-link">Contato</a></li>
+            </ul>
+            <div class="nav-controls">
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="hamburger" id="hamburger" aria-label="Open menu">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-text" data-aos="fade-up">
+                    <h1 class="hero-title">
+                        <span class="greeting">Olá, eu sou</span>
+                        <span class="name">João Silva</span>
+                        <span class="role" id="typewriter"></span>
+                    </h1>
+                    <p class="hero-description">
+                        Desenvolvedor Full Stack apaixonado por criar soluções inovadoras e experiências digitais incríveis.
+                        Especializado em tecnologias modernas com foco em performance e usabilidade.
+                    </p>
+                    <div class="hero-stats">
+                        <div class="stat">
+                            <span class="stat-number" data-target="50">0</span>
+                            <span class="stat-label">Projetos</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number" data-target="5">0</span>
+                            <span class="stat-label">Anos</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number" data-target="25">0</span>
+                            <span class="stat-label">Clientes</span>
+                        </div>
+                    </div>
+                    <div class="hero-buttons">
+                        <a href="#projects" class="btn btn-primary">
+                            <i class="fas fa-code"></i>
+                            Ver Projetos
+                        </a>
+                        <a href="assets/cv-joao-silva.pdf" class="btn btn-secondary" download>
+                            <i class="fas fa-download"></i>
+                            Download CV
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-image" data-aos="fade-left" data-aos-delay="200">
+                    <div class="image-container">
+                        <div class="image-frame">
+                            <img src="images/WhatsApp Image 2025-06-18 at 16.54.38_d5726d41.jpg" alt="Foto de perfil de João Silva" class="profile-img" style="object-fit: cover;">
+                            <div class="image-glow"></div>
+                            <div class="floating-elements">
+                                <div class="floating-element" style="--delay: 0s">💻</div>
+                                <div class="floating-element" style="--delay: 1s">🚀</div>
+                                <div class="floating-element" style="--delay: 2s">⚡</div>
+                                <div class="floating-element" style="--delay: 3s">🎯</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a href="#about" class="scroll-indicator" aria-label="Scroll to About section">
+                <div class="scroll-arrow">
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </a>
+        </div>
+        <div class="hero-bg-animation"></div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Sobre Mim</h2>
+                <p class="section-subtitle">Conheça minha trajetória e paixão pela programação</p>
+            </div>
+            <div class="about-content">
+                <div class="about-text" data-aos="fade-right">
+                    <p class="about-description">
+                        Sou um desenvolvedor Full Stack com mais de 5 anos de experiência criando aplicações web e mobile.
+                        Minha paixão pela tecnologia começou aos 16 anos, e desde então tenho me dedicado a aprender e aplicar
+                        as melhores práticas de desenvolvimento.
+                    </p>
+                    <p class="about-description">
+                        Acredito que a programação é uma forma de arte moderna, onde cada linha de código pode transformar
+                        ideias em realidade. Meu objetivo é sempre entregar soluções eficientes, escaláveis e que proporcionem
+                        a melhor experiência possível para os usuários.
+                    </p>
+                    <div class="about-highlights">
+                        <div class="highlight-item"><i class="fas fa-graduation-cap"></i><span>Bacharel em Ciência da Computação - USP</span></div>
+                        <div class="highlight-item"><i class="fas fa-certificate"></i><span>AWS Certified Solutions Architect</span></div>
+                        <div class="highlight-item"><i class="fas fa-code"></i><span>+15 Linguagens de Programação</span></div>
+                    </div>
+                </div>
+                <div class="about-visual" data-aos="fade-left">
+                    <div class="coding-animation">
+                        <div class="code-editor">
+                            <div class="editor-header">
+                                <div class="editor-buttons">
+                                    <span class="btn-close"></span><span class="btn-minimize"></span><span class="btn-maximize"></span>
+                                </div>
+                                <span class="editor-title">main.js</span>
+                            </div>
+                            <div class="editor-content">
+                                <div class="code-line"><span class="code-comment">// Desenvolvedor apaixonado</span></div>
+                                <div class="code-line"><span class="code-keyword">const</span> <span class="code-variable">developer</span> = {</div>
+                                <div class="code-line">  <span class="code-property">name</span>: <span class="code-string">'João Silva'</span>,</div>
+                                <div class="code-line">  <span class="code-property">skills</span>: [<span class="code-string">'React'</span>, <span class="code-string">'Node.js'</span>],</div>
+                                <div class="code-line">  <span class="code-property">passion</span>: <span class="code-string">'coding'</span></div>
+                                <div class="code-line">};</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Habilidades Técnicas</h2>
+                <p class="section-subtitle">Tecnologias e ferramentas que domino</p>
+            </div>
+            <div class="skills-content">
+                <div class="skills-category" data-aos="fade-up" data-aos-delay="100">
+                    <h3 class="category-title">Frontend</h3>
+                    <div class="skills-grid">
+                        <div class="skill-item"><div class="skill-icon"><i class="fab fa-html5"></i></div><span class="skill-name">HTML5</span><div class="skill-level">95%</div><div class="skill-bar"><div class="skill-progress" data-width="95"></div></div></div>
+                        <div class="skill-item"><div class="skill-icon"><i class="fab fa-css3-alt"></i></div><span class="skill-name">CSS3</span><div class="skill-level">90%</div><div class="skill-bar"><div class="skill-progress" data-width="90"></div></div></div>
+                        <div class="skill-item"><div class="skill-icon"><i class="fab fa-js-square"></i></div><span class="skill-name">JavaScript</span><div class="skill-level">88%</div><div class="skill-bar"><div class="skill-progress" data-width="88"></div></div></div>
+                        <div class="skill-item"><div class="skill-icon"><i class="fab fa-react"></i></div><span class="skill-name">React</span><div class="skill-level">85%</div><div class="skill-bar"><div class="skill-progress" data-width="85"></div></div></div>
+                    </div>
+                </div>
+                <div class="skills-category" data-aos="fade-up" data-aos-delay="200">
+                    <h3 class="category-title">Backend</h3>
+                    <div class="skills-grid">
+                        <div class="skill-item"><div class="skill-icon"><i class="fab fa-node-js"></i></div><span class="skill-name">Node.js</span><div class="skill-level">82%</div><div class="skill-bar"><div class="skill-progress" data-width="82"></div></div></div>
+                        <div class="skill-item"><div class="skill-icon"><i class="fab fa-python"></i></div><span class="skill-name">Python</span><div class="skill-level">80%</div><div class="skill-bar"><div class="skill-progress" data-width="80"></div></div></div>
+                        <div class="skill-item"><div class="skill-icon"><i class="fas fa-database"></i></div><span class="skill-name">MongoDB</span><div class="skill-level">75%</div><div class="skill-bar"><div class="skill-progress" data-width="75"></div></div></div>
+                        <div class="skill-item"><div class="skill-icon"><i class="fas fa-server"></i></div><span class="skill-name">Express.js</span><div class="skill-level">78%</div><div class="skill-bar"><div class="skill-progress" data-width="78"></div></div></div>
+                    </div>
+                </div>
+                <div class="skills-category" data-aos="fade-up" data-aos-delay="300">
+                    <h3 class="category-title">Ferramentas & DevOps</h3>
+                    <div class="skills-grid">
+                        <div class="skill-item"><div class="skill-icon"><i class="fab fa-git-alt"></i></div><span class="skill-name">Git</span><div class="skill-level">90%</div><div class="skill-bar"><div class="skill-progress" data-width="90"></div></div></div>
+                        <div class="skill-item"><div class="skill-icon"><i class="fab fa-docker"></i></div><span class="skill-name">Docker</span><div class="skill-level">75%</div><div class="skill-bar"><div class="skill-progress" data-width="75"></div></div></div>
+                        <div class="skill-item"><div class="skill-icon"><i class="fab fa-aws"></i></div><span class="skill-name">AWS</span><div class="skill-level">70%</div><div class="skill-bar"><div class="skill-progress" data-width="70"></div></div></div>
+                        <div class="skill-item"><div class="skill-icon"><i class="fas fa-code-branch"></i></div><span class="skill-name">CI/CD</span><div class="skill-level">65%</div><div class="skill-bar"><div class="skill-progress" data-width="65"></div></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Meus Projetos</h2>
+                <p class="section-subtitle">Alguns dos meus trabalhos mais recentes</p>
+            </div>
+            <div class="projects-filter" data-aos="fade-up" data-aos-delay="100">
+                <button class="filter-btn active" data-filter="all">Todos</button>
+                <button class="filter-btn" data-filter="web">Web</button>
+                <button class="filter-btn" data-filter="mobile">Mobile</button>
+                <button class="filter-btn" data-filter="api">API</button>
+            </div>
+            <div class="projects-grid" data-aos="fade-up" data-aos-delay="200">
+                <div class="project-card" data-category="web">
+                    <div class="project-image"><img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop" alt="E-commerce Platform"><div class="project-overlay"><div class="project-links"><a href="#" class="project-link" title="Ver Projeto" aria-label="Ver Projeto"><i class="fas fa-external-link-alt"></i></a><a href="#" class="project-link" title="Código no GitHub" aria-label="Código no GitHub"><i class="fab fa-github"></i></a></div></div></div>
+                    <div class="project-content"><h3 class="project-title">E-commerce Platform</h3><p class="project-description">Plataforma completa de e-commerce com sistema de pagamento integrado, gerenciamento de estoque e painel administrativo.</p><div class="project-tech"><span class="tech-tag">React</span><span class="tech-tag">Node.js</span><span class="tech-tag">MongoDB</span><span class="tech-tag">Stripe</span></div></div>
+                </div>
+                <div class="project-card" data-category="web">
+                    <div class="project-image"><img src="https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=600&h=400&fit=crop" alt="Task Manager"><div class="project-overlay"><div class="project-links"><a href="#" class="project-link" title="Ver Projeto" aria-label="Ver Projeto"><i class="fas fa-external-link-alt"></i></a><a href="#" class="project-link" title="Código no GitHub" aria-label="Código no GitHub"><i class="fab fa-github"></i></a></div></div></div>
+                    <div class="project-content"><h3 class="project-title">Sistema de Gerenciamento de Tarefas</h3><p class="project-description">Aplicativo colaborativo com kanban board, chat em tempo real, relatórios detalhados e integração com calendários.</p><div class="project-tech"><span class="tech-tag">Vue.js</span><span class="tech-tag">Express</span><span class="tech-tag">Socket.io</span><span class="tech-tag">PostgreSQL</span></div></div>
+                </div>
+                <div class="project-card" data-category="mobile">
+                    <div class="project-image"><img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=600&h=400&fit=crop" alt="Fitness App"><div class="project-overlay"><div class="project-links"><a href="#" class="project-link" title="Ver Projeto" aria-label="Ver Projeto"><i class="fas fa-external-link-alt"></i></a><a href="#" class="project-link" title="Código no GitHub" aria-label="Código no GitHub"><i class="fab fa-github"></i></a></div></div></div>
+                    <div class="project-content"><h3 class="project-title">App de Fitness</h3><p class="project-description">Aplicativo mobile para acompanhamento de exercícios com IA, planos personalizados e gamificação.</p><div class="project-tech"><span class="tech-tag">React Native</span><span class="tech-tag">Firebase</span><span class="tech-tag">Python</span><span class="tech-tag">TensorFlow</span></div></div>
+                </div>
+                <div class="project-card" data-category="api">
+                    <div class="project-image"><img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&h=400&fit=crop" alt="API Gateway"><div class="project-overlay"><div class="project-links"><a href="#" class="project-link" title="Ver Projeto" aria-label="Ver Projeto"><i class="fas fa-external-link-alt"></i></a><a href="#" class="project-link" title="Código no GitHub" aria-label="Código no GitHub"><i class="fab fa-github"></i></a></div></div></div>
+                    <div class="project-content"><h3 class="project-title">API Gateway Microservices</h3><p class="project-description">Gateway robusto para microserviços com autenticação JWT, rate limiting e monitoramento em tempo real.</p><div class="project-tech"><span class="tech-tag">Node.js</span><span class="tech-tag">Redis</span><span class="tech-tag">Docker</span><span class="tech-tag">AWS</span></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="experience">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Experiência Profissional</h2>
+                <p class="section-subtitle">Minha trajetória profissional</p>
+            </div>
+            <div class="timeline" data-aos="fade-up" data-aos-delay="200">
+                <div class="timeline-item"><div class="timeline-marker"></div><div class="timeline-content"><h3 class="timeline-title">Desenvolvedor Full Stack Sênior</h3><h4 class="timeline-company">TechCorp Solutions</h4><span class="timeline-period">2022 - Presente</span><p class="timeline-description">Liderança técnica no desenvolvimento de aplicações web complexas. Responsável por arquitetura de sistemas, mentoria de desenvolvedores e implementação de melhores práticas.</p><div class="timeline-achievements"><span class="achievement">Aumento de performance em 40%</span><span class="achievement">Mentoria de 5 devs</span><span class="achievement">Arquitetura de 12 projetos</span></div></div></div>
+                <div class="timeline-item"><div class="timeline-marker"></div><div class="timeline-content"><h3 class="timeline-title">Desenvolvedor Frontend</h3><h4 class="timeline-company">Digital Innovations</h4><span class="timeline-period">2020 - 2022</span><p class="timeline-description">Desenvolvimento de interfaces modernas e responsivas utilizando React e Vue.js. Colaboração próxima com designers UX/UI para criar experiências excepcionais.</p><div class="timeline-achievements"><span class="achievement">+25 interfaces desenvolvidas</span><span class="achievement">Melhoria de UX em 60%</span></div></div></div>
+                <div class="timeline-item"><div class="timeline-marker"></div><div class="timeline-content"><h3 class="timeline-title">Desenvolvedor Junior</h3><h4 class="timeline-company">StartupTech</h4><span class="timeline-period">2019 - 2020</span><p class="timeline-description">Início da carreira focado no desenvolvimento backend com Node.js e Python. Participação em projetos de automação e APIs RESTful.</p><div class="timeline-achievements"><span class="achievement">+15 APIs desenvolvidas</span><span class="achievement">Automação de processos</span></div></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="blog" class="blog">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Blog & Artigos</h2>
+                <p class="section-subtitle">Compartilhando conhecimento e experiências</p>
+            </div>
+            <div class="blog-grid">
+                <article class="blog-card" data-aos="fade-up" data-aos-delay="100"><a href="#" class="blog-link-wrapper"><div class="blog-image"><img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&h=250&fit=crop" alt="Laptop com código React na tela."><div class="blog-category">React</div></div><div class="blog-content"><h3 class="blog-title">Guia Completo dos React Hooks</h3><p class="blog-excerpt">Aprenda tudo sobre React Hooks e como eles revolucionaram o desenvolvimento de componentes funcionais.</p><div class="blog-meta"><span class="blog-date">15 Jun 2024</span><span class="blog-read-time">5 min de leitura</span></div></div></a></article>
+                <article class="blog-card" data-aos="fade-up" data-aos-delay="200"><a href="#" class="blog-link-wrapper"><div class="blog-image"><img src="https://images.unsplash.com/photo-1518432031352-d6fc5c10da5a?w=400&h=250&fit=crop" alt="Servidor de dados com luzes piscando."><div class="blog-category">Node.js</div></div><div class="blog-content"><h3 class="blog-title">Otimizando Performance em Node.js</h3><p class="blog-excerpt">Técnicas avançadas para melhorar a performance de aplicações Node.js em produção.</p><div class="blog-meta"><span class="blog-date">10 Mai 2024</span><span class="blog-read-time">8 min de leitura</span></div></div></a></article>
+                <article class="blog-card" data-aos="fade-up" data-aos-delay="300"><a href="#" class="blog-link-wrapper"><div class="blog-image"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=250&fit=crop" alt="Dashboard com vários gráficos e dados."><div class="blog-category">Clean Code</div></div><div class="blog-content"><h3 class="blog-title">Princípios de Clean Code</h3><p class="blog-excerpt">Como escrever código limpo e de fácil manutenção seguindo as melhores práticas da indústria.</p><div class="blog-meta"><span class="blog-date">05 Abr 2024</span><span class="blog-read-time">12 min de leitura</span></div></div></a></article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Entre em Contato</h2>
+                <p class="section-subtitle">Vamos trabalhar juntos no seu próximo projeto</p>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info" data-aos="fade-right">
+                    <div class="contact-item"><div class="contact-icon"><i class="fas fa-envelope"></i></div><div class="contact-details"><h3>Email</h3><p>joao.silva.dev@email.com</p></div></div>
+                    <div class="contact-item"><div class="contact-icon"><i class="fas fa-phone"></i></div><div class="contact-details"><h3>Telefone</h3><p>+55 11 99999-9999</p></div></div>
+                    <div class="contact-item"><div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div><div class="contact-details"><h3>Localização</h3><p>São Paulo, SP - Brasil</p></div></div>
+                    <div class="social-links">
+                        <a href="#" class="social-link" title="GitHub" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="#" class="social-link" title="LinkedIn" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="social-link" title="Twitter" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link" title="Instagram" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <form class="contact-form" data-aos="fade-left" data-aos-delay="200">
+                    <div class="form-group"><input type="text" id="name" name="name" placeholder=" " required><label for="name">Nome</label></div>
+                    <div class="form-group"><input type="email" id="email" name="email" placeholder=" " required><label for="email">Email</label></div>
+                    <div class="form-group"><input type="text" id="subject" name="subject" placeholder=" " required><label for="subject">Assunto</label></div>
+                    <div class="form-group"><textarea id="message" name="message" placeholder=" " rows="6" required></textarea><label for="message">Mensagem</label></div>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i><span>Enviar Mensagem</span><div class="btn-ripple"></div></button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-main">
+                    <div class="footer-brand">
+                        <div class="footer-logo"><span class="logo-text">JS</span></div>
+                        <p class="footer-description">Desenvolvedor Full Stack apaixonado por criar soluções inovadoras e experiências digitais excepcionais.</p>
+                        <div class="footer-social">
+                            <a href="#" class="footer-social-link" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                            <a href="#" class="footer-social-link" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" class="footer-social-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                    <div class="footer-links">
+                        <div class="footer-section"><h4>Navegação</h4><ul><li><a href="#home">Início</a></li><li><a href="#about">Sobre</a></li><li><a href="#skills">Habilidades</a></li><li><a href="#projects">Projetos</a></li></ul></div>
+                        <div class="footer-section"><h4>Serviços</h4><ul><li><a href="#">Desenvolvimento Web</a></li><li><a href="#">Aplicações Mobile</a></li><li><a href="#">Consultoria Tech</a></li><li><a href="#">Code Review</a></li></ul></div>
+                        <div class="footer-section"><h4>Contato</h4><ul><li><a href="mailto:joao.silva.dev@email.com">Email</a></li><li><a href="tel:+5511999999999">Telefone</a></li><li><a href="#contact">Formulário</a></li><li><a href="#">WhatsApp</a></li></ul></div>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>© <span id="current-year">2024</span> João Silva. Todos os direitos reservados.</p>
+                    <p>Desenvolvido com ❤️ e muito café ☕ | Made in Brazil 🇧🇷</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" title="Voltar ao topo" aria-label="Voltar ao topo">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>
