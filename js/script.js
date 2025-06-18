@@ -309,7 +309,7 @@ function initBackToTopButton() {
             backToTopButton.classList.remove('visible');
         }
     };
-    window.addEventListener('scroll', throttle(handleScroll, 200));
+    window.addEventListener('scroll', throttle(handleScroll, 0));
 }
 
 function updateCopyrightYear() {
