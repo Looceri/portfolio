@@ -50,8 +50,7 @@
     --shadow-color: rgba(0, 0, 0, 0.3);
     --navbar-bg: rgba(10, 10, 10, 0.8);
     --navbar-scrolled-bg: rgba(10, 10, 10, 0.9);
-    --cursor-bg: linear-gradient(45deg, var(--color-primary), var(--color-secondary));
-    --cursor-follower-border: rgba(139, 92, 246, 0.5);
+    --cursor-bg: #ffffff; /* White for max contrast with difference blend mode */
     --cursor-blend-mode: difference;
     --bubble-bg: rgba(255, 255, 255, 0.05);
     --bubble-border: rgba(255, 255, 255, 0.1);
@@ -71,9 +70,8 @@
     --shadow-color: rgba(99, 102, 241, 0.1);
     --navbar-bg: rgba(255, 255, 255, 0.8);
     --navbar-scrolled-bg: rgba(255, 255, 255, 0.95);
-    --cursor-bg: linear-gradient(45deg, var(--color-primary), var(--color-secondary));
-    --cursor-follower-border: rgba(99, 102, 241, 0.8);
-    --cursor-blend-mode: difference; /* <-- FIXED */
+    --cursor-bg: #ffffff; /* White is also best for light theme with difference blend mode */
+    --cursor-blend-mode: difference;
     --bubble-bg: rgba(255, 255, 255, 0.3);
     --bubble-border: rgba(99, 102, 241, 0.2);
     --bubble-shadow: rgba(99, 102, 241, 0.15);
@@ -90,24 +88,56 @@ section { padding: var(--section-padding); position: relative; }
 /* 2. Components */
 /* ------------------------------------ */
 
-/* Custom Cursor & Interactive Element Handling */
+/* --- UPDATED CURSOR CSS SECTION (INSTANT CURSOR, SMOOTH FOLLOWER) --- */
 @media (hover: hover) and (pointer: fine) {
   a, button, input, textarea, .project-card, .skill-item, .social-link {
       cursor: none;
   }
 }
-.cursor, .cursor-follower { position: fixed; border-radius: 50%; pointer-events: none; z-index: 9999; transition: transform 0.1s ease; }
-.cursor { 
-    width: 20px; 
-    height: 20px; 
-    background: var(--cursor-bg); 
-    mix-blend-mode: var(--cursor-blend-mode); 
+
+.cursor, .cursor-follower {
+    position: fixed;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    mix-blend-mode: var(--cursor-blend-mode);
 }
-.cursor-follower { 
-    width: 40px; 
-    height: 40px; 
-    border: 2px solid var(--cursor-follower-border); 
-    transition: all 0.3s ease; 
+
+/* The inner dot. Movement is INSTANT - no transitions on transform */
+.cursor {
+    width: 20px;
+    height: 20px;
+    background-color: var(--cursor-bg);
+    /* Only transitions for idle state fade-out, NOT for transform */
+    transition: opacity 0.3s ease;
+}
+
+/* The outer follower. Movement is SMOOTH via JavaScript animation */
+.cursor-follower {
+    width: 40px;
+    height: 40px;
+    background-color: transparent;
+    border: 2px solid var(--cursor-bg);
+    /* Transitions handle changes to scale, background, and border smoothly */
+    /* Position handled by JavaScript, but scale transitions smoothly */
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    transition-property: background-color, border-color;
+}
+
+/* --- State-based Styling --- */
+
+/* IDLE STATE: When the mouse is not moving */
+.is-idle .cursor {
+    /* The inner dot shrinks and disappears */
+    opacity: 0;
+    transform: scale(0);
+}
+
+.is-idle .cursor-follower {
+    /* The follower fills with the blend color, creating a solid circle */
+    background-color: var(--cursor-bg);
 }
 
 /* Navbar */

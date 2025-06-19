@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initLoadingScreen();
     initTheme();
     initNavigation();
-    initCustomCursor();
+    initCustomCursor(); // This function is updated
     initTypewriter();
     initSkillBars();
     initCounters();
@@ -136,37 +136,110 @@ function initNavigation() {
     });
 }
 
+// --- UPDATED CURSOR FUNCTION (IDLE STATE ONLY WHEN CURSOR IS INSIDE FOLLOWER) ---
 function initCustomCursor() {
+    // Don't run on touch devices
     if ('ontouchstart' in window) {
         document.body.style.cursor = 'auto';
         return;
     }
+
     const cursor = document.querySelector('.cursor');
     const follower = document.querySelector('.cursor-follower');
+
     if (!cursor || !follower) return;
 
-    let mouseX = 0, mouseY = 0, followerX = 0, followerY = 0;
+    let mouseX = 0, mouseY = 0;
+    let followerX = 0, followerY = 0;
+    let followerScale = 1;
+    let targetScale = 1;
+    let idleTimer;
+    let isIdle = false;
 
+    // Function to check if cursor is inside the follower
+    const isCursorInsideFollower = () => {
+        const followerRadius = 20; // Half of the 40px follower width
+        const distance = Math.sqrt(
+            Math.pow(mouseX - (followerX + 20), 2) + 
+            Math.pow(mouseY - (followerY + 20), 2)
+        );
+        return distance <= followerRadius;
+    };
+
+    // Updates the idle state based on movement and position
+    const updateIdleState = () => {
+        const shouldBeIdle = isIdle && isCursorInsideFollower();
+        
+        if (shouldBeIdle) {
+            document.body.classList.add('is-idle');
+        } else {
+            document.body.classList.remove('is-idle');
+        }
+    };
+
+    const setIdleState = () => {
+        isIdle = true;
+        updateIdleState();
+    };
+
+    const resetIdleState = () => {
+        isIdle = false;
+        document.body.classList.remove('is-idle');
+    };
+
+    // Detect mouse movement to manage the idle state and update cursor position instantly
     document.addEventListener('mousemove', e => {
         mouseX = e.clientX;
         mouseY = e.clientY;
+        
+        // Update cursor position INSTANTLY (no animation loop needed for cursor)
+        cursor.style.transform = `translate(${mouseX - 10}px, ${mouseY - 10}px)`;
+        
+        clearTimeout(idleTimer);
+        resetIdleState();
+        // Set a timer to go into idle state after 150ms of no movement
+        idleTimer = setTimeout(setIdleState, 150);
     });
 
+    // The animation loop for the follower only (smooth trailing effect)
     const animate = () => {
-        cursor.style.transform = `translate(${mouseX - 10}px, ${mouseY - 10}px)`;
-        followerX += (mouseX - followerX - 20) * 0.1;
-        followerY += (mouseY - followerY - 20) * 0.1;
-        follower.style.transform = `translate(${followerX}px, ${followerY}px)`;
+        // Follower position is interpolated (lerp) for a smooth, trailing effect.
+        // The offset (-20px) centers the 40px follower.
+        const lerpAmount = 0.05; // Reduced from 0.1 to 0.05 for smoother trailing
+        followerX += (mouseX - followerX - 20) * lerpAmount;
+        followerY += (mouseY - followerY - 20) * lerpAmount;
+
+        // Smooth scale interpolation for hover effects
+        const scaleLerpAmount = 0.15;
+        followerScale += (targetScale - followerScale) * scaleLerpAmount;
+
+        // The transform includes both the interpolated position and the smooth scale
+        follower.style.transform = `translate(${followerX}px, ${followerY}px) scale(${followerScale})`;
+
+        // Update idle state every frame to check cursor position relative to follower
+        if (isIdle) {
+            updateIdleState();
+        }
+
         requestAnimationFrame(animate);
     };
+    
+    // Start the animation loop for follower only
     animate();
 
-    document.querySelectorAll('a, button, [data-aos]').forEach(el => {
-        el.addEventListener('mouseenter', () => follower.style.transform = `translate(${followerX}px, ${followerY}px) scale(2.5)`);
-        el.addEventListener('mouseleave', () => follower.style.transform = `translate(${followerX}px, ${followerY}px) scale(1)`);
+    // Add event listeners to interactive elements to trigger the hover (scaling) effect
+    document.querySelectorAll('a, button, input, textarea, .project-card, .skill-item, .social-link').forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            targetScale = 2.5; // Set target scale for smooth interpolation
+        });
+        el.addEventListener('mouseleave', () => {
+            targetScale = 1; // Return to normal scale smoothly
+        });
     });
-}
 
+    // Set the initial idle state on page load
+    idleTimer = setTimeout(setIdleState, 150);
+}
 function initTypewriter() {
     const el = document.getElementById('typewriter');
     if (!el) return;
@@ -235,7 +308,7 @@ function initProjectFilter() {
     const projectCards = document.querySelectorAll('.projects-grid .project-card');
     if (!filterButtons.length) return;
 
-    const transitionDuration = 300; // Must match --transition-medium in CSS (0.3s)
+    const transitionDuration = 300; 
 
     filterButtons.forEach(button => {
         button.addEventListener('click', () => {
@@ -253,8 +326,7 @@ function initProjectFilter() {
                         card.style.display = 'none';
                     }, transitionDuration);
                 } else {
-                    card.style.display = ''; // Reset display property
-                    // Delay removing 'hide' to allow fade-in animation
+                    card.style.display = '';
                     setTimeout(() => {
                         card.classList.remove('hide');
                     }, 10);
@@ -270,7 +342,6 @@ function initContactForm() {
 
     form.addEventListener('submit', e => {
         e.preventDefault();
-        // Placeholder for form submission logic
         showNotification('Mensagem enviada com sucesso!', 'success');
         form.reset();
     });
