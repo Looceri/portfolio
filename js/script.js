@@ -379,15 +379,21 @@ function initProjectFilter() {
 }
 
 function initContactForm() {
-    const form = document.querySelector('.contact-form');
-    if (!form) return;
+  const form = document.querySelector('.contact-form');
+  if (!form) return;
 
-    form.addEventListener('submit', e => {
-        e.preventDefault();
-        showNotification('Mensagem enviada com sucesso!', 'success');
-        form.reset();
-    });
+  form.addEventListener('submit', e => {
+    // NÃO impede o envio
+    // Apenas mostra notificação imediatamente
+    showNotification('Mensagem enviada com sucesso!', 'success');
+
+    // Depois de um tempo (ex: 2 segundos), reseta o formulário
+    setTimeout(() => {
+      form.reset();
+    }, 2000);
+  });
 }
+
 
 function showNotification(message, type = 'success') {
     const notification = document.createElement('div');
