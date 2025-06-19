@@ -82,31 +82,44 @@ function initNavigation() {
     const navMenu = document.getElementById('nav-menu');
     const navLinks = navMenu.querySelectorAll('.nav-link');
     const sections = document.querySelectorAll('section[id]');
+    const heroSection = document.getElementById('hero');
     
     const handleScroll = () => {
+        const heroHeight = heroSection ? heroSection.offsetHeight : 0;
+        const scrollY = window.scrollY;
         const navHeight = navbar.offsetHeight;
-        // Navbar scroll effect
-        if (window.scrollY > 100) {
-            navbar.classList.add('scrolled');
+        
+        // Show navbar only after hero section
+        if (scrollY > heroHeight - 100) { // Show navbar 100px before hero ends
+            navbar.classList.add('after-hero');
+            
+            // Add scrolled effect for additional blur after hero
+            if (scrollY > heroHeight + 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
         } else {
-            navbar.classList.remove('scrolled');
+            navbar.classList.remove('after-hero', 'scrolled');
         }
         
-        // Active link highlighting
-        let currentSectionId = '';
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            if (window.scrollY >= sectionTop - navHeight - 50) {
-                currentSectionId = section.getAttribute('id');
-            }
-        });
+        // Active link highlighting - only when navbar is visible
+        if (navbar.classList.contains('after-hero')) {
+            let currentSectionId = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - navHeight - 50) {
+                    currentSectionId = section.getAttribute('id');
+                }
+            });
 
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href').substring(1) === currentSectionId) {
-                link.classList.add('active');
-            }
-        });
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').substring(1) === currentSectionId) {
+                    link.classList.add('active');
+                }
+            });
+        }
     };
 
     window.addEventListener('scroll', throttle(handleScroll, 100));
@@ -134,8 +147,10 @@ function initNavigation() {
             }
         });
     });
-}
 
+    // Initialize navbar state on page load
+    handleScroll();
+}
 // --- UPDATED CURSOR FUNCTION (IDLE STATE ONLY WHEN CURSOR IS INSIDE FOLLOWER) ---
 function initCustomCursor() {
     // Don't run on touch devices
@@ -286,9 +301,28 @@ function initSkillBars() {
 
 function initCounters() {
     const observer = createObserver(counter => {
-        const target = +counter.getAttribute('data-target');
+        // Pega o valor do atributo data-target do HTML
+        let target = +counter.getAttribute('data-target');
+
+        // Se o contador for o de anos de experiência, fazemos a mágica
+        if (counter.id === 'experience-years') {
+            const startYear = target; // startYear será 2024 (do HTML)
+            
+            // ==========================================================
+            // AQUI ELE VERIFICA O ANO DE HOJE NA MÁQUINA DO USUÁRIO
+            const currentYear = new Date().getFullYear(); 
+            // ==========================================================
+console.log('currentYear',currentYear)
+console.log('startYear', startYear)
+console.log(currentYear - startYear)
+            // O novo 'target' para a animação é a diferença
+            target = currentYear - startYear; 
+        }
+
+        // O resto da função anima o contador até o 'target' que acabamos de calcular
         let current = 0;
-        const increment = target / 100;
+        const increment = target > 0 ? target / 100 : 0; // Evita divisão por zero
+
         const update = () => {
             if (current < target) {
                 current += increment;
@@ -298,8 +332,16 @@ function initCounters() {
                 counter.textContent = target;
             }
         };
-        update();
+
+        // Só inicia a animação se houver algo para contar
+        if (target > 0) {
+            update();
+        } else {
+            counter.textContent = 0;
+        }
+
     }, 0.8);
+
     document.querySelectorAll('.stat-number').forEach(counter => observer.observe(counter));
 }
 
